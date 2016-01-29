@@ -1,0 +1,7 @@
+.idea/
+*.iml
+gen/
+out/
+.gitignore.swp
+.DS_STORE
+
