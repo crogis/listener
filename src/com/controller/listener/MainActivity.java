@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
     private final UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 
     private BluetoothServerSocket btServerSocket;
-    private BufferedReader bufferedReader;
+    private InputStream inputStream;
 
     private TextView commandsReceivedTextView;
 
@@ -44,8 +44,7 @@ public class MainActivity extends Activity {
                     try {
                         BluetoothSocket btSocket = btServerSocket.accept();
                         System.out.println("Name of connector" + btSocket.getRemoteDevice().getName());
-                        InputStream is = btSocket.getInputStream();
-                        bufferedReader = new BufferedReader(new InputStreamReader(is));
+                        inputStream = btSocket.getInputStream();
                         readLine();
                     } catch (IOException e) {
                         System.out.println("Unable to accept connections " + e);
@@ -64,7 +63,7 @@ public class MainActivity extends Activity {
             public void run() {
                 try {
                     System.out.println("Reading lines...");
-                    final String command = bufferedReader.readLine();
+                    final int command = inputStream.read();
                     context.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
